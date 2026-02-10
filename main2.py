@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
-
+from email_sender import send_email
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import create_agent
 
@@ -24,13 +24,13 @@ model = ChatGoogleGenerativeAI(
 
 agent = create_agent(
     model=model,
-    tools=[get_weather,is_prime],
+    tools=[get_weather,is_prime,send_email],
     system_prompt="You are a helpful assistant",
 )
 
 # Run the agent
 response = agent.invoke(
-    {"messages": [{"role": "user", "content": "what is the weather in Mysore and is 2001 prime?"}]}
+    {"messages": [{"role": "user", "content": "what is the weather in Mysore and is 2001 prime? and send an email to ananyahp580@gmail.com with the subject 'Hello from Python' and content 'Hi 👋\n\nThis email was sent using Python.\n\nThanks!'"}]}
 )
 
 # Print only the final AI response
